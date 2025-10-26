@@ -84,7 +84,7 @@ export function LuckyGridPage() {
             }
 
             const idx = data.awardIndex ?? prizes.findIndex(p => p.fonts.some(f => f.id === data.awardId))
-            return idx >= 0 ? idx + 1 : 1
+            return idx - 1
         } catch (err) {
             console.error("❌ 抽奖请求失败：", err)
             alert("请求抽奖接口时出现错误")

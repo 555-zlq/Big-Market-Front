@@ -1,6 +1,9 @@
+"use client"
 import Image from "next/image";
 import {LuckyWheelPage} from "@/app/pages/lucky/lucky-wheel-page";
 import {LuckyGridPage} from "@/app/pages/lucky/lucky-grid-page";
+import dynamic from "next/dynamic";
+const StrategyArmoryButton = dynamic(async ()=> (await import("./components/StrategyArmory")).StrategyArmory)
 
 export default function Home() {
     return (
@@ -9,6 +12,8 @@ export default function Home() {
             <header className="text-3xl font-bold text-center text-gray-800 my-8">
                 大营销平台 - 抽奖展示
             </header>
+
+            <StrategyArmoryButton/>
 
             {/* 中间的两个div元素 */}
             <div className="flex flex-col md:flex-row gap-4 mb-8">

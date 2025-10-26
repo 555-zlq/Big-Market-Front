@@ -97,7 +97,7 @@ export function LuckyWheelPage() {
                     prize.fonts.some((font) => font.id === data.awardId)
                 )
 
-            return prizeIndex >= 0 ? prizeIndex + 1 : 1
+            return prizeIndex - 1
         } catch (err) {
             console.error("❌ 抽奖请求失败：", err)
             alert("请求抽奖接口时出现错误")
