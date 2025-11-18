@@ -1,0 +1,1 @@
+docker build -t carton888/big-market-front-app:1.1 .

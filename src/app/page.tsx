@@ -1,15 +1,22 @@
 "use client"
 import Image from "next/image";
-import {LuckyWheelPage} from "@/app/pages/lucky/lucky-wheel-page";
-import {LuckyGridPage} from "@/app/pages/lucky/lucky-grid-page";
+// import {LuckyWheelPage} from "@/app/pages/lucky/lucky-wheel-page";
+// import {LuckyGridPage} from "@/app/pages/lucky/lucky-grid-page";
 import dynamic from "next/dynamic";
 const StrategyArmoryButton = dynamic(async ()=> (await import("./components/StrategyArmory")).StrategyArmory)
+const LuckyGridPage = dynamic(() => import("./pages/lucky/lucky-grid-page").then(mod => mod.default), {
+    ssr: false,
+});
+const LuckyWheelPage = dynamic(() => import("./pages/lucky/lucky-wheel-page").then(mod => mod.LuckyWheelPage), {
+    ssr: false,
+})
+
 
 export default function Home() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100" style={{backgroundImage: "url('/background.svg')", backgroundColor:"#e7305e"}}>
             {/* 头部文案 */}
-            <header className="text-3xl font-bold text-center text-gray-800 my-8">
+            <header className="text-3xl font-bold text-center text-gray-800 my-8" style={{color:"white"}}>
                 大营销平台 - 抽奖展示
             </header>
 
@@ -30,7 +37,7 @@ export default function Home() {
             </div>
 
             {/* 底部文案 */}
-            <footer className="text-gray-600 text-center my-8">
+            <footer className="text-gray-600 text-center my-8" style={{color:"white"}}>
                 本项目为 「大营销平台」抽奖系统  @Carton
             </footer>
         </div>

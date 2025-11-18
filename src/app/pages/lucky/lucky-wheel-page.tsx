@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react"
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import { LuckyWheel, LuckyWheelProps } from "@lucky-canvas/react"
-import { queryRaffleAwardList, randomRaffle } from "@/apis"
+import { queryRaffleAwardList, draw } from "@/apis"
 import { RaffleAwardVO } from "@/types/RaffleAwardVO"
 import { useSearchParams } from "next/navigation"
 
@@ -26,7 +26,8 @@ type LuckyWheelRef = {
 
 export function LuckyWheelPage() {
     const searchParams = useSearchParams()
-    const strategyId = Number(searchParams.get("strategyId"))
+    const activityId = Number(searchParams.get("activityId"))
+    const userId = String(searchParams.get("userId"))
     const myLucky = useRef<LuckyWheelRef | null>(null)
 
     const [prizes, setPrizes] = useState<Prize[]>([])
@@ -50,7 +51,7 @@ export function LuckyWheelPage() {
     /** 🧩 获取奖品列表 */
     const queryRaffleAwardListHandle = async () => {
         try {
-            const response = await queryRaffleAwardList(strategyId)
+            const response = await queryRaffleAwardList(userId, activityId)
             const { code, info, data }: { code: string; info: string; data: RaffleAwardVO[] } =
                 await response.json()
 
@@ -74,7 +75,7 @@ export function LuckyWheelPage() {
     /** 🎯 抽奖逻辑 */
     const randomRaffleHandle = async (): Promise<number | undefined> => {
         try {
-            const response = await randomRaffle(strategyId)
+            const response = await draw(userId, activityId)
             const {
                 code,
                 info,
@@ -107,15 +108,15 @@ export function LuckyWheelPage() {
     /** 🔄 初始化奖品列表 */
     useEffect(() => {
         queryRaffleAwardListHandle()
-    }, [strategyId])
+    }, [userId, activityId])
 
     /** 🎡 渲染 */
     return (
         <div className="flex flex-col items-center mt-8">
             <LuckyWheel
                 ref={myLucky}
-                width="300px"
-                height="300px"
+                width="340px"
+                height="340px"
                 blocks={blocks}
                 prizes={prizes}
                 buttons={buttons}
