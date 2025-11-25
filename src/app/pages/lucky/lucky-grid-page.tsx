@@ -20,7 +20,9 @@ type LuckyGridPrize = {
     fonts: { id: number | string; text: string; top: string }[]
 }
 
-function LuckyGridPage() {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+function LuckyGridPage({handleRefresh}) {
     const searchParams = useSearchParams()
     const activityId = Number(searchParams.get("activityId"))
     const userId = String(searchParams.get("userId"))
@@ -155,6 +157,9 @@ function LuckyGridPage() {
             }
 
             const idx = data.awardIndex ?? prizes.findIndex(p => p.fonts.some(f => f.id === data.awardId))
+
+            handleRefresh()
+
             return idx - 1
 
         } catch (err) {
